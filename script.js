@@ -217,6 +217,69 @@ function initContactForm() {
             submitBtn.disabled = true;
             
             try {
+                // Send email using EmailJS with variables matching YOUR template
+                const result = await emailjs.send(
+                    'service_xgafxhl',    // Replace with your EmailJS service ID
+                    'template_j5icxzd',   // Replace with your EmailJS template ID
+                    {
+                        // Variables that match YOUR template exactly
+                        user_subject: subject,                        // matches {{title}} in subject
+                        user_name: name,                       // matches {{user_name}}
+                        user_email: email,                     // matches {{user_email}}  
+                        user_subject: subject,                 // matches {{user_subject}}
+                        user_message: message,                      // matches {{message}}
+                        time: new Date().toLocaleString()      // matches {{time}}
+                    }
+                );
+                
+                console.log('Email sent successfully:', result);
+                showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+                contactForm.reset();
+                
+            } catch (error) {
+                console.error('Email sending failed:', error);
+                showNotification('Failed to send message. Please try again later.', 'error');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+}
+/*function initContactForm() {
+    // Initialize EmailJS
+    emailjs.init("GgzCTAuDmw_P3TCfv"); // Replace with your actual public key from EmailJS
+    
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(contactForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Simple validation
+            if (!name || !email || !subject || !message) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showNotification('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            try {
                 // Send email using EmailJS
                 const result = await emailjs.send(
                     'service_xgafxhl',    // Replace with your EmailJS service ID
@@ -243,7 +306,7 @@ function initContactForm() {
             }
         });
     }
-}
+}*/
 
 // Email validation
 function isValidEmail(email) {
