@@ -184,10 +184,13 @@ function initParticles() {
 
 // Contact form functionality
 function initContactForm() {
+    // Initialize EmailJS
+    emailjs.init("GgzCTAuDmw_P3TCfv"); // Replace with your actual public key from EmailJS
+    
     const contactForm = document.getElementById('contactForm');
     
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const formData = new FormData(contactForm);
@@ -207,19 +210,37 @@ function initContactForm() {
                 return;
             }
             
-            // Simulate form submission
             const submitBtn = contactForm.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             submitBtn.disabled = true;
             
-            setTimeout(() => {
+            try {
+                // Send email using EmailJS
+                const result = await emailjs.send(
+                    'service_xgafxhl',    // Replace with your EmailJS service ID
+                    'template_21i5fi7',   // Replace with your EmailJS template ID
+                    {
+                        from_name: name,
+                        from_email: email,
+                        subject: subject,
+                        message: message,
+                        to_email: 'raveenraj1606@gmail.com' // Replace with your email address
+                    }
+                );
+                
+                console.log('Email sent successfully:', result);
                 showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
                 contactForm.reset();
+                
+            } catch (error) {
+                console.error('Email sending failed:', error);
+                showNotification('Failed to send message. Please try again later.', 'error');
+            } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
-            }, 2000);
+            }
         });
     }
 }
