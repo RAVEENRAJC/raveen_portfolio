@@ -223,11 +223,11 @@ function initContactForm() {
                     'template_j5icxzd',   // Replace with your EmailJS template ID
                     {
                         // Variables that match YOUR template exactly
-                        user_subject: subject,                        // matches {{title}} in subject
-                        user_name: name,                       // matches {{user_name}}
-                        user_email: email,                     // matches {{user_email}}  
-                        user_subject: subject,                 // matches {{user_subject}}
-                        user_message: message,                      // matches {{message}}
+                        subject: subject,                        // matches {{title}} in subject
+                        name: name,                       // matches {{user_name}}
+                        email: email,                     // matches {{user_email}}  
+                        subject: subject,                 // matches {{user_subject}}
+                        message: message,                      // matches {{message}}
                         time: new Date().toLocaleString()      // matches {{time}}
                     }
                 );
