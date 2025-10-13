@@ -412,7 +412,7 @@ function scrollToSection(sectionId) {
 function downloadResume() {
     // Create a temporary link to trigger download
     const link = document.createElement('a');
-    link.href = "Raveenraj_CV .pdf"; // Update with actual CV path
+    link.href = "Raveenraj_CV.pdf"; // Update with actual CV path
     link.download = 'Raveen_Raj_CV.pdf';
     link.click();
     
@@ -589,3 +589,4 @@ focusStyle.textContent = `
     }
 `;
 document.head.appendChild(focusStyle);
+
